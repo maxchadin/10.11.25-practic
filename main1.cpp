@@ -7,6 +7,17 @@ struct IntArray{
   int last() const;
   IntArray(int i);
   ~IntArray();
+  int*a
+  size_t k;
+  IntArray::~IntArray(){
+    delete[] a;
+  }
+  IntArray::IntArray(int i){
+    a()new int [1]),
+    k(1)
+  {
+    a[o]=i;
+  }
 }
 
 int main(){
