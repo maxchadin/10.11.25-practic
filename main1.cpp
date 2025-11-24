@@ -66,7 +66,7 @@ public:
     }
   }
 
-  ~IntMatrix() override {
+  ~IntMatrix(){
   }
 
   size_t getRows() const noexcept { return rows_; }
@@ -111,8 +111,6 @@ public:
     size_t new_size = new_rows * new_cols;
     int* new_a = new (std::nothrow) int[new_size];
     if (!new_a) return false;
-    for (size_t i = 0; i < new_size; ++i)
-      new_a[i] = 0;
     for (size_t r = 0; r < rows_; ++r) {
       for (size_t c = 0; c < cols_; ++c) {
         size_t src = r * cols_ + c;
@@ -121,6 +119,15 @@ public:
         size_t dst = dst_r * new_cols + dst_c;
         new_a[dst] = a[src];
       }
+    }
+    for (size_t c = 0; c < new_cols; ++c) {
+      size_t idx = row_after * new_cols + c;
+      new_a[idx] = 0;
+    }
+    for (size_t r = 0; r < new_rows; ++r) {
+      if (r == row_after) continue;
+      size_t idx = r * new_cols + col_after;
+      new_a[idx] = 0;
     }
     delete[] a;
     a = new_a;
